@@ -20,6 +20,7 @@ export default function AdminUploadPanel() {
   const [msg, setMsg] = useState("");
   const [subjectOptions, setSubjectOptions] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log(backendUrl)
 
   const year = user?.publicMetadata?.year || "1";
   const branch = user?.publicMetadata?.branch || "CSE";
