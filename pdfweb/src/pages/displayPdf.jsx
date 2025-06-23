@@ -77,6 +77,8 @@ export default function PdfList() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   console.log(backendUrl)
 
+  
+
   const fetchPdfs = async () => {
     try {
       const token = await getToken();
