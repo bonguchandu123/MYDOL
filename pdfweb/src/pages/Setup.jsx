@@ -14,7 +14,7 @@ export default function SetupPage() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const years = ["1", "2", "3", "4"];
-  const branches = ["CSE", "CSD", "CIVIL", "CHE", "EEE", "MECH", "ECE"];
+  const branches = ["CSE", "CSD", "CIVIL", "CHE", "EEE", "MECH", "ECE","CHEM","CSAI","CSIT"];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

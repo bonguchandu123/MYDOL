@@ -14,9 +14,10 @@ export default function SubjectSelector() {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const year = user?.publicMetadata?.year;
-  const branch = user?.publicMetadata?.branch;
-  const subjects = subjectsMap[year]?.[branch] || [];
+const year = user?.publicMetadata?.year;
+const branch = user?.publicMetadata?.branch;
+const subjects = (year && branch && subjectsMap[year]?.[branch]) || [];
+
 
   useEffect(() => {
     setMounted(true);
