@@ -31,7 +31,6 @@ app.use(clerkMiddleware())
 
 app.use('/api/clerk',clerkWebhooks)
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/user",router)
 app.use("/api/pdf",Pdfrouter)
