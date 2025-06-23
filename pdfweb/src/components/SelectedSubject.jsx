@@ -17,6 +17,7 @@ export default function SubjectSelector() {
 const year = user?.publicMetadata?.year;
 const branch = user?.publicMetadata?.branch;
 const subjects = (year && branch && subjectsMap[year]?.[branch]) || [];
+console.log(subjects)
 
 
   useEffect(() => {
