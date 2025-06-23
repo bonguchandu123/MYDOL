@@ -75,6 +75,7 @@ export default function PdfList() {
   const [pdfs, setPdfs] = useState([]);
   const [loading, setLoading] = useState(true);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log(backendUrl)
 
   const fetchPdfs = async () => {
     try {
