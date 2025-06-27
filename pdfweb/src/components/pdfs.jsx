@@ -27,7 +27,7 @@ export default function PdfLibraryPage() {
   const [view, setView] = useState("grid");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  useEffect(() => {
+
     const fetchPdfs = async () => {
       try {
         const token = await getToken();
@@ -39,8 +39,10 @@ export default function PdfLibraryPage() {
         console.error("Error loading PDFs:", err);
       }
     };
+
+    
     fetchPdfs();
-  }, []);
+
 
   const userSubjects = subjectsMap[user?.publicMetadata?.year]?.[user?.publicMetadata?.branch] || [];
 
