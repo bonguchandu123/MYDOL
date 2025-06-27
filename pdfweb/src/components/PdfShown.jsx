@@ -31,7 +31,7 @@ export default function HomePdfPreview() {
     };
 
     fetchPdfs();
-  }, [pdfs]);
+  }, []);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this PDF?")) return;
