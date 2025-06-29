@@ -1,6 +1,6 @@
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,6 +22,7 @@ import { usePdfStore } from "../store/usePdfStore";
 export default function PdfLibraryPage() {
   const { getToken } = useAuth();
   const { user } = useUser();
+  const pdfSectionRef = useRef(null);
  
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -43,6 +44,19 @@ export default function PdfLibraryPage() {
       loadPdfs();
     }
   }, [user]);
+
+  useEffect(() => {
+  if (searchQuery || selectedSubject) {
+    // Delay to wait for DOM render
+    setTimeout(() => {
+      pdfSectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  }
+}, [searchQuery, selectedSubject]);
+
 
 
 
@@ -136,7 +150,7 @@ export default function PdfLibraryPage() {
       {/* View toggle */}
       <div className="max-w-6xl mx-auto flex justify-end mb-6">
         <div className="flex items-center gap-2 bg-[#1e1e2e] p-1 rounded-lg ring-1 ring-gray-800">
-          <button
+          <button 
             onClick={() => setView("grid")}
             className={`p-2 rounded-md ${
               view === "grid"
@@ -161,6 +175,7 @@ export default function PdfLibraryPage() {
 
       {/* PDF Cards */}
       <motion.div
+       ref={pdfSectionRef}
         layout
         className={`grid gap-6 ${
           view === "grid"

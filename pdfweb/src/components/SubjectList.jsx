@@ -25,6 +25,9 @@ export default function SubjectPdfPage() {
 
 
 
+
+
+
     
   return (
     <div className="min-h-screen px-4 py-12 bg-[#0a0a0f]">
@@ -32,6 +35,7 @@ export default function SubjectPdfPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+       
         className="text-center max-w-3xl mx-auto mb-12"
       >
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 text-transparent bg-clip-text mb-4">

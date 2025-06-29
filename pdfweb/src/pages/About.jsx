@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
 import { GraduationCap, Upload, Users, Sparkles } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function About() {
+    const aboutRef = useRef(null);
+
+  // Scroll to About section when component mounts
+  useEffect(() => {
+    aboutRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2f] to-[#0f0f1a] px-6 py-20 text-white">
       <motion.div
+        ref={aboutRef} 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
