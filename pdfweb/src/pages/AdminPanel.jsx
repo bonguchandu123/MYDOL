@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 
 import { motion } from "framer-motion";
-import { subjectsMap } from "../assets/assets";
+
 import { usePdfStore } from "../store/usePdfStore";
 
 
@@ -19,7 +19,7 @@ export default function AdminUploadPanel() {
   const [file, setFile] = useState(null);
 
   const [subjectOptions, setSubjectOptions] = useState([]);
-  const { uploadPdf, loading, msg } = usePdfStore(); 
+  const { uploadPdf, loading, msg,subjectsMap} = usePdfStore(); 
 
   const year = user?.publicMetadata?.year || "1";
   const branch = user?.publicMetadata?.branch || "CSE";
