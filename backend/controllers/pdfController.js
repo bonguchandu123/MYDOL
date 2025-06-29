@@ -2,13 +2,7 @@
 import PDF from "../models/Pdf.js";
 import User from "../models/User.js";
 import {v2 as cloudinary} from 'cloudinary'
-
-
-
-
-
 import streamifier from "streamifier";
-
 
 export const uploadPdf = async (req, res) => {
   try {
@@ -76,7 +70,6 @@ export const uploadPdf = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error", error: err.message });
   }
 };
-
 // controllers/pdfController.js
 export const getPdfsByYearBranch = async (req, res) => {
   try {
@@ -126,6 +119,7 @@ export const deletePdf = async (req, res) => {
 
     const pdf = await PDF.findById(id);
     if (!pdf) return res.status(404).json({ message: "PDF not found" });
+    
 
     const isUploader = pdf.uploadedBy === userId;
 
@@ -153,6 +147,7 @@ export const downloadPdf = async (req, res) => {
     });
 
     res.setHeader("Content-Disposition", `attachment; filename="${pdf.title}.pdf"`);
+    res.setHeader("Content-Type", "application/pdf");
     response.data.pipe(res);
   } catch (err) {
     console.error("Download error:", err.message);

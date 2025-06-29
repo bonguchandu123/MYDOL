@@ -1,37 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { AnimatePresence, motion } from "framer-motion";
 import PdfCard from "../components/PdfCard"; // Your existing styled PDF card component
+import { usePdfStore } from "../store/usePdfStore";
 
 export default function SubjectPdfPage() {
   const { selectedSubject } = useParams();
   const { getToken } = useAuth();
   const { user } = useUser();
-  const [pdfs, setPdfs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+ const { selPdfs, loading, SelectedPdf } = usePdfStore();
 
-  useEffect(() => {
-    const fetchPdfs = async () => {
-      try {
-        const token = await getToken();
-        const res = await axios.get(`${backendUrl}/api/pdf/subject/${selectedSubject}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPdfs(res.data.pdfs);
-        console.log(res.data.pdfs)
-      } catch (err) {
-        console.error("Error fetching subject PDFs:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+ 
+ useEffect(() => {
+  const loadSubjectPdfs = async () => {
+    const token = await getToken();
+    await SelectedPdf(token, selectedSubject);
+  };
 
-    fetchPdfs();
-  }, [selectedSubject]);
+  loadSubjectPdfs();
+}, [selectedSubject]);
 
+
+
+
+    
   return (
     <div className="min-h-screen px-4 py-12 bg-[#0a0a0f]">
       {/* Header */}
@@ -54,13 +48,13 @@ export default function SubjectPdfPage() {
         layout
       >
         <AnimatePresence mode="popLayout">
-          {pdfs.map((pdf, index) => (
+          {selPdfs.map((pdf, index) => (
             <PdfCard key={pdf._id} pdf={pdf} index={index} user={user} getToken={getToken} />
           ))}
         </AnimatePresence>
       </motion.div>
 
-      {pdfs.length === 0 && !loading && (
+      {selPdfs.length === 0 && !loading && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
