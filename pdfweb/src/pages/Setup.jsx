@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { motion } from "framer-motion";
+import { usePdfStore } from "../store/usePdfStore";
 
 export default function SetupPage() {
   const { getToken } = useAuth();
   const navigate = useNavigate();
 
+  const {
+    
+    loading,
+    error,
+
+    setUp
+  } = usePdfStore();
   const [form, setForm] = useState({ year: "", branch: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+ 
+ 
 
   const years = ["1", "2", "3", "4"];
   const branches = ["CSE", "CSD", "CIVIL", "CHE", "EEE", "MECH", "ECE","CHEM","CSAI","CSIT"];
@@ -20,28 +27,11 @@ export default function SetupPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.year || !form.branch) {
-      return setError("Please select both year and branch.");
-    }
-
-    try {
-      setLoading(true);
-      const token = await getToken();
-      await axios.put(`${backendUrl}/api/user/setup`, form, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      navigate("/"); // or /dashboard
-    } catch (err) {
-      setError("Failed to update details.");
-      console.log(err.message);
-    } finally {
-      setLoading(false);
-    }
+    const token = await getToken();
+    await setUp(form,token, navigate);
   };
 
   return (

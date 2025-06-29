@@ -1,37 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { motion } from "framer-motion";
 import { Clock, FileText, User } from "lucide-react";
+import { usePdfStore } from "../store/usePdfStore";
 
 export default function PdfDetailsPage() {
   const { id } = useParams();
   const { getToken } = useAuth();
-  const [pdf, setPdf] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+ 
+
+
+const { selectedPdf: pdf, fetchPdfById, loading } = usePdfStore();
 
   useEffect(() => {
-    const fetchPdf = async () => {
-      try {
-        const token = await getToken();
-        const res = await axios.get(`${backendUrl}/api/pdf/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPdf(res.data.pdf);
-      } catch (err) {
-        console.error("Failed to fetch PDF details", err);
-      } finally {
-        setLoading(false);
-      }
+    const loadPdf = async () => {
+      const token = await getToken();
+      await fetchPdfById(id, token);
     };
-    fetchPdf();
+    loadPdf();
   }, [id]);
 
-  if (loading) return <div className="text-center py-20 text-gray-400">Loading PDF details...</div>;
-  if (!pdf) return <div className="text-center py-20 text-red-400">PDF not found</div>;
+  if (loading)
+    return <div className="text-center py-20 text-gray-400">Loading PDF details...</div>;
+
+  if (!pdf)
+    return <div className="text-center py-20 text-red-400">PDF not found</div>;
 
   const downloadUrl = pdf.fileUrl.replace("/upload/", "/upload/fl_attachment/");
 

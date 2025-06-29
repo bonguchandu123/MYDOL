@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
@@ -13,7 +13,8 @@ import {
   X,
 } from "lucide-react";
 import PdfCard from "../components/PdfCard";
-import { subjectsMap } from "../assets/assets";
+
+import { usePdfStore } from "../store/usePdfStore";
 
 // Subject Map based on user year & branch
 
@@ -21,30 +22,37 @@ import { subjectsMap } from "../assets/assets";
 export default function PdfLibraryPage() {
   const { getToken } = useAuth();
   const { user } = useUser();
-  const [pdfs, setPdfs] = useState([]);
+ 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [view, setView] = useState("grid");
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const {
+    allPdfs,
+  
+    LoadPdfs,
+    subjectsMap,
+  } = usePdfStore();
 
   useEffect(() => {
-    const fetchPdfs = async () => {
-      try {
-        const token = await getToken();
-        const res = await axios.get(`${backendUrl}/api/pdf/my`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPdfs(res.data.pdfs);
-      } catch (err) {
-        console.error("Error loading PDFs:", err);
-      }
+    const loadPdfs = async () => {
+      const token = await getToken();
+      await LoadPdfs(token);
     };
-    fetchPdfs();
-  }, []);
+
+    if (allPdfs.length === 0 && user) {
+      loadPdfs();
+    }
+  }, [user]);
+
+
+
+
+ 
+
 
   const userSubjects = subjectsMap[user?.publicMetadata?.year]?.[user?.publicMetadata?.branch] || [];
 
-  const filteredPdfs = pdfs.filter((pdf) => {
+  const filteredPdfs = allPdfs.filter((pdf) => {
     const matchesSubject = !selectedSubject || pdf.subject === selectedSubject;
     const matchesSearch =
       pdf.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

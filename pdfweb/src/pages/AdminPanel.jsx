@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { motion } from "framer-motion";
 import { subjectsMap } from "../assets/assets";
+import { usePdfStore } from "../store/usePdfStore";
 
 
 export default function AdminUploadPanel() {
@@ -16,11 +17,9 @@ export default function AdminUploadPanel() {
   });
 
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState("");
+
   const [subjectOptions, setSubjectOptions] = useState([]);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log(backendUrl)
+  const { uploadPdf, loading, msg } = usePdfStore(); 
 
   const year = user?.publicMetadata?.year || "1";
   const branch = user?.publicMetadata?.branch || "CSE";
@@ -35,41 +34,14 @@ export default function AdminUploadPanel() {
   };
 
   
-
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return setMsg("Please select a file");
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", form.title);
-    formData.append("subject", form.subject);
-    formData.append("unit", form.unit);
-
-    try {
-      setLoading(true);
-      setMsg("");
-      const token = await getToken();
-
-      const res = await axios.post(`${backendUrl}/api/pdf/upload`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if(res.data.success){
-        console.log(res.data)
-      }
-
-      setMsg("✅ PDF uploaded successfully!");
+    await uploadPdf(form, file, getToken, () => {
+      // Reset form only on success
       setForm({ title: "", subject: "", unit: "" });
       setFile(null);
-    } catch (err) {
-      setMsg("❌ Upload failed");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (

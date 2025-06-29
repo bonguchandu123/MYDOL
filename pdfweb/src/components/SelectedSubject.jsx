@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { subjectsMap } from "../assets/assets";
 
-
-
 export default function SubjectSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
