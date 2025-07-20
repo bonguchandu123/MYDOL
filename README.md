@@ -4,7 +4,38 @@ A full-stack web application to securely upload, preview, and manage PDF files u
 
 ![App Preview](https://github.com/user-attachments/assets/74863b09-7506-4350-8ec7-3808d2a52420)
 
+
 ---
+
+## 🔗 Live Demo
+
+👉 [Click here to view the live app](https://mydolpdfnew.vercel.app/)  
+Hosted on **Vercel**
+
+📌 Note: Currently available for **1st-year subjects** only. Support for more branches coming soon!  steps to done when you enter first sigin without account and then place your yr and branch then start uplaoding 
+
+
+## 🧭 How to Use
+
+Follow these steps to get started with the app:
+
+1. 🔐 **Sign In**  
+   - Click on **Sign In** at the top-right corner.  
+   - If you don’t have an account, click **Sign Up** to register using Clerk authentication.
+
+2. 🗂️ **Select Year & Branch**  
+   - After signing in, you'll be prompted to select your **Year** (e.g., 1st Year) and your **Branch**.
+
+3. 📄 **Upload PDFs**  
+   - Use the upload form to add your PDFs with a **Title**, **Description**, and **Subject**.
+   - Uploaded PDFs will be displayed in a searchable and filterable list.
+
+4. 🔍 **View & Manage PDFs**  
+   - You can view PDFs directly in the browser.
+   - Use filters to find specific PDFs by subject.
+
+📌 **Note:** The platform currently supports **1st Year subjects only**. Support for all branches and years is coming soon!
+
 
 ## ✅ Project Status
 
