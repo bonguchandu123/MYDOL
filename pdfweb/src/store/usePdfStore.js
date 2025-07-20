@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -46,8 +47,11 @@ export const usePdfStore = create((set, get) => ({
         headers: { Authorization: `Bearer ${token}` },
       });
       set({ pdfs: res.data.pdfs.slice(0, 6) });
+      console.log(res.data.pdfs)
+
     } catch (err) {
-      console.error("Failed to fetch PDFs:", err);
+      console.error("Failed to fetch PDFs:", err.message);
+      
     } finally {
       set({ loading: false });
     }
@@ -62,6 +66,7 @@ export const usePdfStore = create((set, get) => ({
         pdfs: state.pdfs.filter((pdf) => pdf._id !== id),
         allPdfs: state.allPdfs.filter((pdf) => pdf._id !== id),
       }));
+      toast.success("Pdf deleted successfully")
     } catch (err) {
       console.error("Delete failed:", err);
       throw err;
@@ -84,6 +89,7 @@ export const usePdfStore = create((set, get) => ({
             const res = await axios.get(`${backendUrl}/api/pdf/subject/${selectedSubject}`, {
               headers: { Authorization: `Bearer ${token}` },
             });
+            console.log(res)
             set({selPdfs:res.data.pdfs});
             console.log(res.data.pdfs)
           } catch (err) {
@@ -131,12 +137,14 @@ export const usePdfStore = create((set, get) => ({
       });
 
       if (res.data.success) {
-        set({ msg: "✅ PDF uploaded successfully!" });
+        set({ msg: " PDF uploaded successfully!" });
+        toast.success("PDF uploaded succesfully")
         if (onSuccess) onSuccess(); // callback to reset form
       }
     } catch (err) {
-      console.error("❌ Upload error:", err);
-      set({ msg: "❌ Upload failed" });
+      console.error("Upload error:", err);
+      set({ msg: "Upload failed" });
+      toast.error("Please make sure that pdf size is less than 10mb")
     } finally {
       set({ loading: false });
     }

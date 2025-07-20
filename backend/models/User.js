@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   _id: {
-    type: String, // Clerk user ID
+    type: String, 
     required: true,
   },
   name: {
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   username: {
-    type: String, // Optional: if you want to store a unique username
+    type: String, 
     required: false,
   },
   email: {
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   image: {
-    type: String, // Optional profile image
+    type: String, 
     required: false,
   },
   branch: {
