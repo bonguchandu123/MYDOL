@@ -20,13 +20,13 @@ export const uploadPdf = async (req, res) => {
       return res.status(400).json({ success: false, message: "Missing title, subject, or unit" });
     }
 
-    // ✅ Validate user exists
+    // Validate user exists
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // ✅ Upload PDF using stream + buffer (memoryStorage)
+
     const streamUpload = () => {
       return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
@@ -70,7 +70,7 @@ export const uploadPdf = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error", error: err.message });
   }
 };
-// controllers/pdfController.js
+
 export const getPdfsByYearBranch = async (req, res) => {
   try {
     const userId = req.auth.userId;
@@ -91,7 +91,7 @@ export const getPdfsByYearBranch = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-// controllers/pdfController.js
+
 export const getPdfsBySubject = async (req, res) => {
   try {
     const { subject } = req.params;
@@ -135,7 +135,7 @@ export const deletePdf = async (req, res) => {
   }
 };
 
-// controllers/pdfController.js
+
 
 export const downloadPdf = async (req, res) => {
   try {

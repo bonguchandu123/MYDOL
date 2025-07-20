@@ -20,6 +20,7 @@ import HomeAboutSection from "./components/HomeAbout";
 import Support from "./pages/Support";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import { Toaster } from "react-hot-toast";
 
 
  // Adjust path if needed
@@ -31,6 +32,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f0f1a] via-[#151522] to-[#0f0f1a] text-gray-100">
       {/* Always visible */}
+        <Toaster position="top-center" reverseOrder={false}/>
       <Navbar/>
 
       <main className="flex-grow">
@@ -48,7 +50,7 @@ export default function App() {
   <Route path="/contact" element={<ContactForm />} />
 
   {/* Protected Routes */}
-  <Route element={<ProtectedRoute />}>
+
     {/* <Route path="/pdf" element={<UploadForm />} /> */}
     <Route path="/pdfs" element={<PdfLibraryPage />} />
     <Route path="/subject/:selectedSubject" element={<SubjectPdfPage />} />
@@ -58,7 +60,7 @@ export default function App() {
     <Route path="/support" element={<Support/>} />
     <Route path="/privacy" element={<Privacy/>} />
     <Route path="/terms" element={<Terms/>} />
-  </Route>
+ 
 </Routes>
 
       </main>
