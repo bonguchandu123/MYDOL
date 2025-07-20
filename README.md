@@ -6,6 +6,16 @@ A full-stack web application to securely upload, preview, and manage PDF files u
 
 ---
 
+## ✅ Project Status
+
+- ✔️ Fully functional: Upload, preview, and manage PDFs
+- ✔️ Authentication secured via Clerk
+- ✔️ Cloudinary integration tested and working
+- ✔️ Clean and responsive UI
+- 🚧 Currently available for **1st-year subjects only**
+- 🔜 **Upcoming Update:** Will support subjects from **all branches and years**
+
+
 ## 🚀 Features
 
 - 🧾 Upload PDF files with title, description, and subject
@@ -120,14 +130,7 @@ npm run dev
 ```
 
 
-###  Project Status
-✔️ Fully Functional (Upload, View, Filter PDFs)
 
-✔️ Auth secured via Clerk
-
-✔️ Cloudinary integration tested
-
-✔️ Responsive UI and clean UX
 
 ### 🙋🏻‍♂️ Author
 👨‍💻 Bongu Chandu
